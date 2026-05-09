@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    
+    <title>ChatFun</title>
+</head>
+
+<body class="bg-blue-900 min-h-screen text-white">
+    
+    <header>
+        <!-- mauro? cabeçalho -->
+    </header>
+
+    <main class="p-5">
+        <div class="bg-red-800 p-3 rounded-x1 mb-5 text-center">
+            Hi!
+            <span id="usuarioLogado"></span>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-5">
+
+            <aside class="bg-blue-400 border-3 border-black rounded-xl p-4 w-full lg:w-1/4">
+
+                <h2 class="bg-blue-400 border-3 border-black rounded-xl p-4 w-full lg:w-1/4">
+                    Conversas
+                </h2>
+
+                 <button onclick="trocarChat('chat1')"
+                    class="w-full bg-black hover:bg-green-600 transition rounded-lg p-3 mb-3 cursor-pointer">
+                    Joao
+                </button>
+
+                <button onclick="trocarChat('chat1')"
+                    class="w-full bg-black hover:bg-green-600 transition rounded-lg p-3 cursor-pointer">
+                    Maria
+                </button>
+            </aside>
+        </div>
+
+
+        <section class="bg-blue-400 border-3 border-white rounded-xl p-4 flex-1 flex flex-col">
+
+                <h2 id="tituloChat"
+                    class="text-black text-2xl font-bold text-center mb-4">
+                    Joao
+                </h2>
+
+                <!-- MENSAGENS -->
+                <div id="mensagens"
+                    class="bg-blue-950 rounded-xl p-4 h-[500px] overflow-y-auto mb-4 space-y-3">
+
+                </div>
+
+                <!-- ENVIAR -->
+                <div class="flex gap-3">
+
+                    <input type="text"
+                        id="mensagemInput"
+                        placeholder="Digite sua mensagem..."
+                        class="flex-1 p-3 rounded-lg bg-white text-black">
+
+                    <button onclick="enviarMensagem()"
+                        class="bg-green-500 hover:bg-green-700 transition rounded-lg px-5 cursor-pointer">
+                        Enviar
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script>
+
+      
+
+        
+
+        let usuarioAtual = usuarios[0];
+
+        document.getElementById("usuarioLogado").innerText =
+            usuarioAtual.usuario;
+
+        const chats = {
+
+            chat1: [],
+
+            chat2: []
+
+        };
+
+        let chatAtual = "chat1";
+
+        function carregarMensagens() {
+
+            const areaMensagens =
+                document.getElementById("mensagens");
+
+            areaMensagens.innerHTML = "";
+
+            chats[chatAtual].forEach(msg => {
+
+                areaMensagens.innerHTML += `
+
+                    <div class="bg-blue-700 p-3 rounded-lg">
+
+                        <strong class="text-yellow-300">
+                            ${msg.usuario}
+                        </strong>
+
+                        <p>
+                            ${msg.texto}
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+        function trocarChat(chat) {
+
+            chatAtual = chat;
+
+            const titulo =
+                document.getElementById("tituloChat");
+
+            if(chat === "chat1") {
+
+                titulo.innerText = "Chat Geral";
+
+            }
+
+            else {
+
+                titulo.innerText = "Chat Programação";
+
+            }
+
+            carregarMensagens();
+
+        }
+
+        function enviarMensagem() {
+
+            const input =
+                document.getElementById("mensagemInput");
+
+            const texto = input.value;
+
+            if(texto.trim() === "") {
+
+                return;
+
+            }
+
+            chats[chatAtual].push({
+
+                usuario: usuarioAtual.usuario,
+
+                texto: texto
+
+            });
+
+            input.value = "";
+
+            carregarMensagens();
+
+        }
+
+        carregarMensagens();
+
+    </script>
+
+</body>
+</html>
