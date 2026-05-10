@@ -1,6 +1,11 @@
 let usuarioAtual =
 localStorage.getItem("usuarioLogado");
 
+if(usuarioAtual == null) {
+    alert('Nenhum usuário foi logado! Por favor, faça login na página seguinte!');
+    window.location.href = "login.html";
+}
+
 document.getElementById("usuarioLogado")
 .innerText = usuarioAtual;
 
